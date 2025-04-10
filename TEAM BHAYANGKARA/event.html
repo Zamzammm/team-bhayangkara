@@ -4,91 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Bhayangkara Fest - Pendaftaran</title>
+    <title>NeoEvent - Daftar Event</title>
+    <style>
+        .event-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .event-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <header class="bg-danger text-white text-center p-4">
-        <h1>BHAYANGKARA FEST</h1>
+    <header class="bg-primary text-white text-center p-4">
+        <h1>NeoEvent</h1>
         <nav>
             <a href="index.html" class="text-white">Beranda</a> |
             <a href="event.html" class="text-white">Event</a> |
-            <a href="register.html" class="text-white">Daftar</a> |
-            <a href="summary.html" class="text-white">History Pendaftaran</a> |
             <a href="contact.html" class="text-white">Kontak</a>
         </nav>
     </header>
     <div class="container mt-5">
-        <h2>Pendaftaran Event</h2>
-        <form id="registrationForm">
-            <div class="form-group">
-                <label for="name">Nama Lengkap</label>
-                <input type="text" class="form-control" id="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" required>
-            </div>
-            <div class="form-group">
-                <label for="eventChoice">Pilihan Event</label>
-                <select class="form-control" id="eventChoice" required>
-                    <option value="">Pilih Event</option>
-                    <option value="Konser Musik">Konser Musik</option>
-                    <option value="Workshop Fotografi">Workshop Fotografi</option>
-                    <option value="Seminar Kewirausahaan">Seminar Kewirausahaan</option>
-                    <option value="Pameran Seni">Pameran Seni</option>
-                    <option value="Festival Kuliner">Festival Kuliner</option>
-                    <option value="Pelatihan Digital Marketing">Pelatihan Digital Marketing</option>
-                    <option value="Konferensi Teknologi">Konferensi Teknologi</option>
-                    <option value="Pertunjukan Teater">Pertunjukan Teater</option>
-                    <option value="Lomba Lari">Lomba Lari</option>
-                    <option value="Pameran Buku">Pameran Buku</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="ticketCount">Jumlah Tiket</label>
-                <input type="number" class="form-control" id="ticketCount" value="1" min="1" required>
-            </div>
-            <div class="form-group">
-                <label>Total Harga: <span id="totalPrice">Rp 75.000</span></label>
-            </div>
-            <button type="button" class="btn btn-primary" onclick="saveRegistration()">Daftar</button>
-        </form>
+        <h2>Daftar Event</h2>
+        <div class="row" id="eventSelection">
+            <!-- Event cards will be generated here -->
+        </div>
     </div>
 
-    <script src="script.js"></script>
     <script>
-        // Menghitung dan Menampilkan Total Harga
-        document.getElementById('ticketCount').addEventListener('input', function() {
-            const ticketCount = parseInt(this.value);
-            const pricePerTicket = 75000; // Harga per tiket
-            const totalPrice = ticketCount * pricePerTicket;
-            document.getElementById('totalPrice').innerText = `Rp ${totalPrice}`;
-        });
-
-        // Menyimpan Data Pendaftaran ke localStorage
-        function saveRegistration() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const eventChoice = document.getElementById('eventChoice').value;
-            const ticketCount = document.getElementById('ticketCount').value;
-
-            if (!name || !email || !eventChoice || !ticketCount) {
-                alert("Semua field wajib diisi!");
-                return;
+        const events = [
+            {
+                title: "Konser Musik",
+                description: "Nikmati konser musik dari artis terkenal seperti Juicy Luicy, Bernadya serta masih banyak artis lainnya pada acara ini!",
+                image: "Serang-Slank.jpg"
+            },
+            {
+                title: "Pameran Kepolisian",
+                description: "Datanglah ke pameran ini untuk melihat dan berinteraksi dengan alutsista dari Polri.",
+                image: "687761ff-9de0-4ecc-b584-3e1e1ead0ab8.jpeg"
+            },
+            {
+                title: "Pameran Teknologi",
+                description: "Cobalah teknologi-teknologi modern yang dimiliki oleh Polri.",
+                image: "c:\Users\Athallah\Pictures\Saved Pictures\polri-teknologi-canggih-buat-kerja-polisi-terbantukan-ONRQyp58rJ.jpg"
+            },
+            {
+                title: "Layanan Masyarakat",
+                description: "Dalam event ini cobalah layanan masyarakat secara gratis seperti, pembuatan skck, samsat keliling, serta penyedia tenaga kesehatan oleh Polri",
+                image: "4070779230.jpg"
+            },
+            {
+                title: "Festival Kuliner",
+                description: "Cicipi berbagai hidangan dari penjuru nusantara yang kami sediakan.",
+                image: "kapolsek-mampang-kompol-david-tinjau-bazar-dan-festival-kuliner-3_169.jpeg"
             }
+        ];
 
-            const totalPrice = ticketCount * 75000; // Misalnya Rp 75.000 per tiket
-            const registrationData = {
-                name,
-                email,
-                event: eventChoice,
-                tickets: ticketCount,
-                total: totalPrice
-            };
-
-            localStorage.setItem('registrationData', JSON.stringify(registrationData));
-            window.location.href = 'summary.html'; // Arahkan ke halaman ringkasan
+        // Menampilkan Event dalam Bentuk Card
+        function displayEvents() {
+            const eventSelection = document.getElementById('eventSelection');
+            events.forEach((event) => {
+                const card = `
+                    <div class="col-md-4">
+                        <div class="card event-card" onclick="selectEvent('${event.title}', '${event.description}')">
+                            <img src="${event.image}" class="card-img-top" alt="${event.title}">
+                            <div class="card-body">
+                                <h5 class="card-title">${event.title}</h5>
+                                <p class="card-text">${event.description}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                eventSelection.innerHTML += card;
+            });
         }
+
+        // Fungsi untuk memilih event
+        function selectEvent(title, description) {
+            const eventChoiceInput = document.getElementById('eventChoice');
+            eventChoiceInput.value = title; // Set event title to the input
+            alert(`Anda memilih event: ${title}\nDeskripsi: ${description}`);
+            // Arahkan ke halaman pendaftaran
+            window.location.href = 'register.html';
+        }
+
+        // Panggil fungsi untuk menampilkan event saat halaman dimuat
+        window.onload = displayEvents;
     </script>
 </body>
 </html>
