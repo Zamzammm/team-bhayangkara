@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>NeoEvent - Daftar Event</title>
+    <title>NeoEvent - Pendaftaran</title>
 </head>
 <body>
     <header class="bg-primary text-white text-center p-4">
@@ -16,32 +16,77 @@
         </nav>
     </header>
     <div class="container mt-5">
-        <div class="row" id="event-cards">
-            <!-- Event cards will be generated here -->
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="eventModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="eventModalBody"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                </div>
+        <h2>Pendaftaran Event</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" class="form-control" id="name" required>
             </div>
-        </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="eventChoice">Pilihan Event</label>
+                <select class="form-control" id="eventChoice" required>
+                    <option value="">Pilih Event</option>
+                    <option value="Konser Musik">Konser Musik</option>
+                    <option value="Workshop Fotografi">Workshop Fotografi</option>
+                    <option value="Seminar Kewirausahaan">Seminar Kewirausahaan</option>
+                    <option value="Pameran Seni">Pameran Seni</option>
+                    <option value="Festival Kuliner">Festival Kuliner</option>
+                    <option value="Pelatihan Digital Marketing">Pelatihan Digital Marketing</option>
+                    <option value="Konferensi Teknologi">Konferensi Teknologi</option>
+                    <option value="Pertunjukan Teater">Pertunjukan Teater</option>
+                    <option value="Lomba Lari">Lomba Lari</option>
+                    <option value="Pameran Buku">Pameran Buku</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ticketCount">Jumlah Tiket</label>
+                <input type="number" class="form-control" id="ticketCount" value="1" min="1" required>
+            </div>
+            <div class="form-group">
+                <label>Total Harga: <span id="totalPrice">Rp 75.000</span></label>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="saveRegistration()">Daftar</button>
+        </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Menghitung dan Menampilkan Total Harga
+        document.getElementById('ticketCount').addEventListener('input', function() {
+            const ticketCount = parseInt(this.value);
+            const pricePerTicket = 75000; // Harga per tiket
+            const totalPrice = ticketCount * pricePerTicket;
+            document.getElementById('totalPrice').innerText = `Rp ${totalPrice}`;
+        });
+
+        // Menyimpan Data Pendaftaran ke localStorage
+        function saveRegistration() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const eventChoice = document.getElementById('eventChoice').value;
+            const ticketCount = document.getElementById('ticketCount').value;
+
+            if (!name || !email || !eventChoice || !ticketCount) {
+                alert("Semua field wajib diisi!");
+                return;
+            }
+
+            const totalPrice = ticketCount * 75000; // Misalnya Rp 75.000 per tiket
+            const registrationData = {
+                name,
+                email,
+                event: eventChoice,
+                tickets: ticketCount,
+                total: totalPrice
+            };
+
+            localStorage.setItem('registrationData', JSON.stringify(registrationData));
+            window.location.href = 'summary.html'; // Arahkan ke halaman ringkasan
+        }
+    </script>
 </body>
 </html>
