@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>NeoEvent - Pendaftaran</title>
+</head>
+<body>
+    <header class="bg-primary text-white text-center p-4">
+        <h1>NeoEvent</h1>
+        <nav>
+            <a href="index.html" class="text-white">Beranda</a> |
+            <a href="events.html" class="text-white">Event</a> |
+            <a href="contact.html" class="text-white">Kontak</a>
+        </nav>
+    </header>
+    <div class="container mt-5">
+        <h2>Pendaftaran Event</h2>
+        <form id="registrationForm" onsubmit="event.preventDefault(); saveRegistration();">
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="eventChoice">Pilihan Event</label>
+                <select class="form-control" id="eventChoice" required>
+                    <option value="">Pilih Event</option>
+                    <option value="Konser Musik">Konser Musik</option>
+                    <option value="Workshop Fotografi">Workshop Fotografi</option>
+                    <option value="Seminar Kewirausahaan">Seminar Kewirausahaan</option>
+                    <option value="Pameran Seni">Pameran Seni</option>
+                    <option value="Festival Kuliner">Festival Kuliner</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ticketCount">Jumlah Tiket</label>
+                <input type="number" class="form-control" id="ticketCount" min="1" value="1" required>
+            </div>
+            <div class="form-group">
+                <label>Total Harga: <span id="totalPrice">Rp 75.000</span></label>
+            </div>
+            <button type="submit" class="btn btn-success">Daftar</button>
+        </form>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Menghitung dan menampilkan total harga secara otomatis
+        document.getElementById('ticketCount').addEventListener('input', function() {
+            const ticketCount = this.value;
+            const totalPrice = ticketCount * 75000; // Misalnya Rp 75.000 per tiket
+            document.getElementById('totalPrice').innerText = `Rp ${totalPrice}`;
+        });
+    </script>
+</body>
+</html>

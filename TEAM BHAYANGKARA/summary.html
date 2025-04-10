@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>NeoEvent - Ringkasan Pendaftaran</title>
+</head>
+<body>
+    <header class="bg-primary text-white text-center p-4">
+        <h1>NeoEvent</h1>
+        <nav>
+            <a href="index.html" class="text-white">Beranda</a> |
+            <a href="events.html" class="text-white">Event</a> |
+            <a href="contact.html" class="text-white">Kontak</a>
+        </nav>
+    </header>
+    <div class="container mt-5">
+        <h2>Ringkasan Pendaftaran</h2>
+        <div class="card">
+            <div class="card-body">
+                <p><strong>Nama:</strong> <span id="summaryName"></span></p>
+                <p><strong>Email:</strong> <span id="summaryEmail"></span></p>
+                <p><strong>Event:</strong> <span id="summaryEvent"></span></p>
+                <p><strong>Jumlah Tiket:</strong> <span id="summaryTickets"></span></p>
+                <p><strong>Total Harga:</strong> <span id="summaryTotal"></span></p>
+                <button class="btn btn-danger" onclick="clearData()">Hapus Data</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Menampilkan Data Pendaftaran di Halaman Ringkasan
+        displaySummary();
+    </script>
+</body>
+</html>
